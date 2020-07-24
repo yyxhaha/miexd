@@ -111,6 +111,12 @@ import java.util.Map;
     private void textWebSocketFrameHandler(ChannelHandlerContext ctx, TextWebSocketFrame frame) {
         // 客户端发送过来的内容不进行业务处理，原样返回
         ctx.channel().writeAndFlush(frame.retain());
+        
+        // 通过pool获取对方targetChannel 并且发送消息
+        //targetChannel.writeAndFlush(frame.retain());
+
+        //如果是自动回复，可以调用方法sendMessage 
+        //sendMessage(targetChannel,msg)
     }
 
     /**
@@ -121,5 +127,16 @@ import java.util.Map;
      */
     private void pingWebSocketFrameHandler(ChannelHandlerContext ctx, PingWebSocketFrame frame) {
         ctx.channel().writeAndFlush(new PongWebSocketFrame(frame.content().retain()));
+    }
+
+/**
+     * 发送消息
+     *
+     * @param channel
+     * @param msg
+     */
+    public void sendMessage(Channel channel, String msg) {
+        TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8));
+        channel.writeAndFlush(webSocketFrame.retain());
     }
 }
