@@ -1,0 +1,3 @@
+# threadUtils
+多线程 处理ConcurrentLinkedQueue里的任务
+实现基类orderBean并且覆写方法execute
