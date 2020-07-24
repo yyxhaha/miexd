@@ -116,7 +116,7 @@ import java.util.Map;
         //targetChannel.writeAndFlush(frame.retain());
 
         //如果是自动回复，可以调用方法sendMessage 
-        //sendMessage(targetChannel,msg)
+        //sendMessage(ctx.channel(),msg)
     }
 
     /**

@@ -1,6 +1,7 @@
 
 /**
     * 等待事件到来，分发事件处理
+    * 1、单Reactor单线程模型
     */
     class Reactor implements Runnable {
         ​
@@ -102,4 +103,4 @@
               public void process() {
                   //do something
               }
-          }
+            }        
