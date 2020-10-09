@@ -52,7 +52,7 @@ public class MQReceiver {
         return Optional.ofNullable(map).map(p->p.get(key)).map(Object::toString).orElse(null);
     }
 
-    //使用不同的exchange 获取消息 这个应该是订阅模式
+    //使用不同的exchange 获取消息 这个应该是主题模式
     @RabbitListener(queues = "topic.print",containerFactory = "rabbitListenerContainerFactory2")
     public void process2(String  hello, Channel channel, @Headers Map<String,Object> map)  {
         *//*try {
