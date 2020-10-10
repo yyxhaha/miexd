@@ -2,8 +2,8 @@ spring:
   rabbitmq:
     addresses: 服务地址
     port: 5672
-    virtual-host: yptPrintTask
-    username: jl
-    password: jl
+    virtual-host: youHost
+    username: xx
+    password: xx
     # 使用启用消息确认模式
     publisher-confirm-type: correlated
