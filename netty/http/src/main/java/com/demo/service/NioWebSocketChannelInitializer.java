@@ -1,4 +1,4 @@
-package com.topcheer.httpNetty;
+package com.demo.service;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
@@ -23,11 +23,12 @@ public class NioWebSocketChannelInitializer extends ChannelInitializer<SocketCha
     @Override
     protected void initChannel(SocketChannel socketChannel) {
         socketChannel.pipeline()
-                     .addLast(new HttpServerCodec())
-                     .addLast(new ChunkedWriteHandler())
-                     .addLast(new HttpObjectAggregator(8192))
-                     .addLast(nioWebSocketHandler)
-                     .addLast(new WebSocketServerProtocolHandler(webSocketProperties.getPath(), null, true, 65536));
+                     .addLast(new HttpServerCodec())//解码器
+                     .addLast(new ChunkedWriteHandler())//保证消息的完整性
+                     .addLast(new HttpObjectAggregator(8192))//消息转对象
+                     .addLast(nioWebSocketHandler)//自定义处理器
+                     .addLast(new WebSocketServerProtocolHandler(webSocketProperties.getPath(),
+                             null, true, 65536));//升级到ws
     }
 }
 

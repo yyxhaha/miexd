@@ -1,15 +1,11 @@
-package com.topcheer.httpNetty;
+package com.demo.service;
 
-import com.topcheer.httpNetty.pojo.ChannelUser;
-import io.netty.channel.Channel;
-import io.netty.channel.group.ChannelGroup;
-import io.netty.channel.group.DefaultChannelGroup;
-import io.netty.util.concurrent.GlobalEventExecutor;
+
+import com.demo.pojo.ChannelUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
-import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -20,16 +16,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class NioWebSocketChannelPool {
 
    // private final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
-    private final Map<String,ChannelUser> channelUsers=new ConcurrentHashMap();
+    private final Map<String, ChannelUser> channelUsers=new ConcurrentHashMap();
 
     /**
      * 新增一个客户端通道
      *
-     * @param channel
+     * @param channelUser
      */
-   /* public void addChannel(Channel channel) {
-        channels.add(channel);
-    }*/
 
     public void addChannel(ChannelUser channelUser){
         channelUsers.put(channelUser.getChannelId(),channelUser);
@@ -38,11 +31,8 @@ public class NioWebSocketChannelPool {
     /**
      * 移除一个客户端连接通道
      *
-     * @param channel
+     * @param channelUser
      */
-    /*public void removeChannel(Channel channel) {
-        channels.remove(channel);
-    }*/
     public void removeChannel(ChannelUser channelUser){
         channelUsers.remove(channelUser);
     }

@@ -1,7 +1,6 @@
-package com.topcheer.httpNetty.service;
+package com.demo.service;
 
-import com.topcheer.httpNetty.NioWebSocketChannelPool;
-import com.topcheer.httpNetty.pojo.ChannelUser;
+import com.demo.pojo.ChannelUser;
 import io.netty.channel.Channel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

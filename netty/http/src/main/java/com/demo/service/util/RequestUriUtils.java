@@ -1,4 +1,4 @@
-package com.topcheer.httpNetty;
+package com.demo.service.util;
 
 /**
  * Created by yyx on 2020/7/19.
@@ -15,17 +15,14 @@ public class RequestUriUtils {
      */
     public static Map<String, String> getParams(String uri) {
         Map<String, String> params = new HashMap<>(10);
-
         int idx = uri.indexOf("?");
         if (idx != -1) {
             String[] paramsArr = uri.substring(idx + 1).split("&");
-
             for (String param : paramsArr) {
                 idx = param.indexOf("=");
                 params.put(param.substring(0, idx), param.substring(idx + 1));
             }
         }
-
         return params;
     }
 

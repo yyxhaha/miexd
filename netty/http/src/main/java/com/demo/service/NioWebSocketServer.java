@@ -1,4 +1,4 @@
-package com.topcheer.httpNetty;
+package com.demo.service;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -35,13 +35,13 @@ public class NioWebSocketServer implements InitializingBean, DisposableBean {
             workGroup = new NioEventLoopGroup(webSocketProperties.getWork());
 
             ServerBootstrap serverBootstrap = new ServerBootstrap();
-            serverBootstrap.option(ChannelOption.SO_BACKLOG, 1024)
+            serverBootstrap.option(ChannelOption.SO_BACKLOG, 1024)//最大队列数，太小会无法建立连接
                            .group(bossGroup, workGroup)
                            .channel(NioServerSocketChannel.class)
-                           .localAddress(webSocketProperties.getPort())
-                           .childHandler(webSocketChannelInitializer);
+                           .localAddress(webSocketProperties.getPort())//端口号
+                           .childHandler(webSocketChannelInitializer);//自定义处理器
 
-            channelFuture = serverBootstrap.bind().sync();
+            channelFuture = serverBootstrap.bind().sync();//绑定端口，创建连接
         } finally {
             if (channelFuture != null && channelFuture.isSuccess()) {
                 log.info("Netty server startup on port: {} (websocket) with context path '{}'", webSocketProperties.getPort(), webSocketProperties.getPath());

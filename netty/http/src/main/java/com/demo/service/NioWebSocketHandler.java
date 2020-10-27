@@ -1,12 +1,15 @@
-package com.topcheer.httpNetty;
+package com.demo.service;
 
-import com.topcheer.httpNetty.pojo.ChannelUser;
-import com.topcheer.httpNetty.service.LogonService;
+import com.demo.pojo.ChannelUser;
+import com.demo.service.util.RequestUriUtils;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.websocketx.*;
+import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,7 +25,7 @@ import java.util.Map;
     public class NioWebSocketHandler extends SimpleChannelInboundHandler<WebSocketFrame> {
 
     @Autowired
-    private NioWebSocketChannelPool webSocketChannelPool;
+    private NettyService nettyService;
     @Autowired
     private WebSocketProperties webSocketProperties;
     @Autowired
@@ -31,21 +34,22 @@ import java.util.Map;
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         log.debug("客户端连接：{}", ctx.channel().id().asLongText());
-        //webSocketChannelPool.addChannel(ctx.channel());
-        ChannelUser channelUser=new ChannelUser();
-        channelUser.setChannel(ctx.channel());
-        channelUser.setChannelId(ctx.channel().id().asLongText());
-        webSocketChannelPool.addChannel(channelUser);
+        nettyService.addChannelHandler(ctx.channel());
         super.channelActive(ctx);
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         log.debug("客户端断开连接：{}", ctx.channel().id());
-        //webSocketChannelPool.removeChannel(ctx.channel());
+        nettyService.removeChannelHandler(ctx.channel());
+        //todo 对应的业务处理
         super.channelInactive(ctx);
     }
 
+    /**
+     * 消息读取完毕
+     * @param ctx
+     */
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) {
         ctx.channel().flush();
@@ -63,6 +67,12 @@ import java.util.Map;
         }
     }
 
+    /***
+     * 读取消息
+     * @param ctx
+     * @param msg
+     * @throws Exception
+     */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         log.info("客户端请求数据类型：{}", msg.getClass());

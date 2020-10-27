@@ -1,4 +1,4 @@
-package com.topcheer.httpNetty.pojo;
+package com.demo.pojo;
 
 import io.netty.channel.Channel;
 import lombok.Getter;
