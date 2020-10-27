@@ -44,6 +44,20 @@ public class NettyServiceImpl implements NettyService {
         return true;
     }
 
+    @Override
+    public void addChannelHandler(Channel myChannel) {
+
+    }
+
+    @Override
+    public void addChannelHandler(ChannelUser myChannel) {
+
+    }
+
+    @Override
+    public void removeChannelHandler(Channel myChannel) {
+
+    }
 
 
     @Override
