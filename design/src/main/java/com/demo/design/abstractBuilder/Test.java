@@ -9,5 +9,6 @@ public class Test{
         NyPizza nyPizza=new NyPizza.Builder(NyPizza.Size.small).
                 addTopping(Pizza.Topping.ham).
                 addTopping(Pizza.Topping.mushroom).build();
+        System.out.println(1);
     }
 }
